@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<title>Option Pricer</title>
+		<!--<link rel="stylesheet" href="style.css" type="text/css" />-->
+	</head>
+	<body>
+
+		<select id="d" name="d">
+			<option value="c">Call</option>
+			<option value="p">Put</option>
+		</select>
+
+		<input type="text" class="" id="S" name="S" placeholder="Stock Price" value="100">
+		<input type="text" class="" id="X" name="X" placeholder="Strike" value="110">
+		<input type="text" class="" id="r" name="r" placeholder="Risk-free rate" value="0.01">
+		<input type="text" class="" id="T" name="T" placeholder="Years to maturity" value="1">
+		<input type="text" class="" id="v" name="v" placeholder="Volatility" value="0.2">
+		
+		<div>Theoretical: <span id="Theoretical"></span></div>
+		<div>Delta: <span id="Delta"></span></div>
+		<div>Vega: <span id="Vega"></span></div>
+		<div>Theta: <span id="Theta"></span></div>
+
+		<script src="code.js"></script>
+	</body>
+</html>
