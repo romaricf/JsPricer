@@ -15,7 +15,7 @@ function BlackScholes(PutCallFlag, S, X, T, r, v) {
 	var theroretical = 0.0;
 	if (PutCallFlag== "c"){
 		theroretical = S * CND(d1)-X * Math.exp(-r * T) * CND(d2);
-		console.log("theta1:"+(S * v * Nprime(d1) / 2 / Math.sqrt(T))+" 2:"+(r * X * Math.exp(-r * T) * CND(d1 - v * Math.sqrt(T))));
+		//console.log("theta1:"+(S * v * Nprime(d1) / 2 / Math.sqrt(T))+" 2:"+(r * X * Math.exp(-r * T) * CND(d1 - v * Math.sqrt(T))));
 		theta = -(S * v * Nprime(d1) / 2 / Math.sqrt(T) + r * X * Math.exp(-r * T) * CND(d1 - v * Math.sqrt(T))) / 365;
 	}
 	else{
@@ -54,6 +54,35 @@ function CND(x){
 
 }
 
+function ImpliedVolatility(PutCallFlag, S, X, T, r, p){
+
+	var px = [];
+	for(var i = 0;i<=1000;i++)
+	{
+		px[i] = BlackScholes(PutCallFlag, S, X, T, r, 0.001*i).theroretical;
+		//console.log("vol "+i+":"+px[i]);
+	}
+
+	// Find the best:
+	var bestU = 1000;
+	var bestL = 0;
+	for(var i = 1;i<=1000;i++)
+	{
+		if(px[i] > px[bestL] && px[i] <= p)
+			bestL = i;
+		if(px[i] < px[bestU] && px[i] >= p)
+			bestU = i;
+	}
+
+	console.log("bestL "+bestL);
+	console.log("bestU "+bestU);
+
+	if(Math.abs(p - px[bestL]) <=  Math.abs(p - px[bestU]))
+		return bestL/1000.0;
+	else
+		return bestU/1000.0;
+}
+
 
 function calc()
 {
@@ -69,11 +98,15 @@ function calc()
 	//nrOfLessons = Number(document.getElementById("nrOfLessons").value)
 
 	console.log("calc "+PutCallFlag+" "+S+" "+X+" "+T+" "+r+" "+v);
-	result = BlackScholes(PutCallFlag,S,X,T,r,v);
+
+	var result = BlackScholes(PutCallFlag,S,X,T,r,v);
+	var impliedVol = ImpliedVolatility(PutCallFlag,S,X,T,r,result.theroretical);
+
 	document.getElementById('Theoretical').innerHTML = result.theroretical.toFixed(4);
 	document.getElementById('Delta').innerHTML = result.delta.toFixed(4);
 	document.getElementById('Vega').innerHTML = result.vega.toFixed(4);
 	document.getElementById('Theta').innerHTML = result.theta.toFixed(4);
+	document.getElementById('ImpliedVol').innerHTML = impliedVol.toFixed(3);
 	//document.getElementById('Theo').value = result;
 }
 
