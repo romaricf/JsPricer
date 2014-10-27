@@ -5,6 +5,7 @@
 	</head>
 	<body>
 
+		<div style="background-color: #D8E5FF">Option Pricing</div>
 		<select id="d" name="d">
 			<option value="c">Call</option>
 			<option value="p">Put</option>
@@ -18,10 +19,29 @@
 		
 		<div>Theoretical: <span id="Theoretical"></span></div>
 		<div>Delta: <span id="Delta"></span></div>
+		<div>?Lambda: <span id="Lambda"></span></div>
+		<div>?Gamma: <span id="Gamma"></span></div>
 		<div>Vega: <span id="Vega"></span></div>
 		<div>Theta: <span id="Theta"></span></div>
 		<div>(Implied Volatility: <span id="ImpliedVol"></span>)</div>
+	
 
-		<script src="code.js"></script>
+
+		<div style="margin-top: 50px; background-color: #D8E5FF">Implied Volatility</div>
+		<select id="vd" name="vd">
+			<option value="c">Call</option>
+			<option value="p">Put</option>
+		</select>
+
+		<input type="text" class="" id="vS" name="vS" placeholder="Stock Price" value="100">
+		<input type="text" class="" id="vX" name="vX" placeholder="Strike" value="110">
+		<input type="text" class="" id="vr" name="vr" placeholder="Risk-free rate" value="0.01">
+		<input type="text" class="" id="vT" name="vT" placeholder="Years to maturity" value="1">
+		<input type="text" class="" id="vp" name="vp" placeholder="Price" value="1">
+
+		<div>Implied Volatility: <span id="vImpliedVol"></span></div>
+	
+
+	<script src="code.js"></script>
 	</body>
 </html>
