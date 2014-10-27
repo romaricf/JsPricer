@@ -10,6 +10,8 @@ function BlackScholes(PutCallFlag, S, X, T, r, v) {
 
 	var delta = CND(d1);
 	var vega = S * Math.sqrt(T) * Nprime(d1) / 100;
+	var gamma = Nprime(d1) / S / v / Math.sqrt(T) / 100;
+	var lambda = delta * S / X;
 
 	var theta = 0.0;
 	var theroretical = 0.0;
@@ -28,7 +30,9 @@ function BlackScholes(PutCallFlag, S, X, T, r, v) {
 		theroretical: theroretical,
 		delta: delta,
 		vega: vega,
-		theta: theta
+		theta: theta,
+		gamma: gamma,
+		lambda: lambda
 	}
 
 }
@@ -106,7 +110,28 @@ function calc()
 	document.getElementById('Delta').innerHTML = result.delta.toFixed(4);
 	document.getElementById('Vega').innerHTML = result.vega.toFixed(4);
 	document.getElementById('Theta').innerHTML = result.theta.toFixed(4);
+	document.getElementById('Gamma').innerHTML = result.gamma.toFixed(4);
 	document.getElementById('ImpliedVol').innerHTML = impliedVol.toFixed(3);
+	document.getElementById('Lambda').innerHTML = result.lambda.toFixed(4);
+	//document.getElementById('Theo').value = result;
+}
+
+function calcImpliedVol()
+{
+	var PutCallFlag = document.getElementById('vd').value;;
+	var S = parseFloat(document.getElementById('vS').value);
+	var X = parseFloat(document.getElementById('vX').value);
+	var T = parseFloat(document.getElementById('vT').value);
+
+	var r = parseFloat(document.getElementById('vr').value);
+	var p = parseFloat(document.getElementById('vp').value);
+
+	console.log("calcImpliedVol "+PutCallFlag+" "+S+" "+X+" "+T+" "+r+" "+p);
+
+	//var result = BlackScholes(PutCallFlag,S,X,T,r,v);
+	var impliedVol = ImpliedVolatility(PutCallFlag,S,X,T,r,p);
+
+	document.getElementById('vImpliedVol').innerHTML = impliedVol.toFixed(3);
 	//document.getElementById('Theo').value = result;
 }
 
@@ -117,4 +142,12 @@ document.getElementById('T').onchange = calc;
 document.getElementById('r').onchange = calc;
 document.getElementById('v').onchange = calc;
 
+document.getElementById('vd').onchange = calcImpliedVol;
+document.getElementById('vS').onchange = calcImpliedVol;
+document.getElementById('vX').onchange = calcImpliedVol;
+document.getElementById('vT').onchange = calcImpliedVol;
+document.getElementById('vr').onchange = calcImpliedVol;
+document.getElementById('vp').onchange = calcImpliedVol;
+
 calc();
+calcImpliedVol();
