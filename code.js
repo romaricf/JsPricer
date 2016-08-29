@@ -34,7 +34,6 @@ function BlackScholes(PutCallFlag, S, X, T, r, v) {
 		gamma: gamma,
 		lambda: lambda
 	}
-
 }
 
 function Nprime(x){
