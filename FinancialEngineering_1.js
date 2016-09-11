@@ -65,3 +65,13 @@ function MultiPeriodBinomialPricingCall(R, u, d, S0, K, n) {
 		q: q
 	}
 }
+
+
+// should return u=1.0395....
+//var u = BlackScholesBinomialCalibration(0.25, 15, 0.3);
+//console.log("u: "+u);
+
+function BlackScholesBinomialCalibration(T, n, Vol)
+{
+    return Math.exp(Vol * Math.sqrt(T/n));
+}
